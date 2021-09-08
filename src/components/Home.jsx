@@ -1,53 +1,21 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom';
 
 export default class Home extends Component {
-
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            Movies: [],
-            movieId: [],
-        }
-    }
-
-    componentDidMount = () => {
-        fetch('./info.json')
-            .then(res => res.json())
-            .then(result => {
-                this.setState({
-                    Movies: result
-                })
-            })
-    }
-
-    movieId = (e) => {
-        this.setState({
-            Movies: e.target.id,
-        })
-    }
-
     render() {
-        console.log(this.state.Movies);
         return (
             <>
-                {
-                    this.state.Movies.map((movie, index) => {
-                        return (
-                            <button key={index}
-                                className='d-block btn btn-outline-primary'
-                                onClick={this.movieId}>
-                                <li className='list-unstyled' >
-                                    {movie.title}
-                                </li>
+                <h2 className="text-center mt-5">Films</h2>
+                <div className="container mt-5 d-flex justify-content-center flex-wrap">
+                    {this.props.movies.map(movie => (
+                        <Link className="m-3" to={`/movie/${movie.id}`}>
+                            <button>
+                                <img src={movie.image} alt={movie.title} />
                             </button>
-
-                        )
-
-                    })
-                }
+                        </Link>
+                    ))}
+                </div>
             </>
         )
-
     }
 }
